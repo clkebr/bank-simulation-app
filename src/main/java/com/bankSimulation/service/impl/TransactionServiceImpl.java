@@ -7,7 +7,9 @@ import com.bankSimulation.exception.BalanceNotSufficientException;
 import com.bankSimulation.model.Account;
 import com.bankSimulation.model.Transaction;
 import com.bankSimulation.repository.AccountRepository;
+import com.bankSimulation.repository.TransactionRepository;
 import com.bankSimulation.service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -19,9 +21,11 @@ import java.util.UUID;
 public class TransactionServiceImpl implements TransactionService {
 
     AccountRepository accountRepository;
+    TransactionRepository transactionRepository;
 
-    public TransactionServiceImpl(AccountRepository accountRepository) {
+    public TransactionServiceImpl(AccountRepository accountRepository, TransactionRepository transactionRepository) {
         this.accountRepository = accountRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     @Override
@@ -29,7 +33,12 @@ public class TransactionServiceImpl implements TransactionService {
         validateAccount(sender, receiver);
         checkAccountOwnership(sender,receiver);
         executeBalanceAndUpdateIfRequired(amount,sender,receiver);
-        return null;
+
+        Transaction transaction = Transaction.builder()
+                .amount(amount).sender(sender.getId())
+                .receiver(receiver.getId()).creationDate(creationDate).message(message).build();
+
+        return transactionRepository.save(transaction);
     }
 
     private void executeBalanceAndUpdateIfRequired(BigDecimal amount, Account sender, Account receiver) {

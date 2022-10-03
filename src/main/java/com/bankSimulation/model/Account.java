@@ -1,5 +1,6 @@
 package com.bankSimulation.model;
 
+import com.bankSimulation.enums.AccountStatus;
 import com.bankSimulation.enums.AccountType;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,5 @@ public class Account {
     private AccountType accountType;
     private Date creationDate;
     private Long userId;
+    private AccountStatus accountStatus;
 }

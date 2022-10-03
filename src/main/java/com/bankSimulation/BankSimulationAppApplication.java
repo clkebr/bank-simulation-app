@@ -19,22 +19,22 @@ public class BankSimulationAppApplication {
 
         ApplicationContext container = SpringApplication.run(BankSimulationAppApplication.class, args);
 
-        //get account and transaction service beans
-        AccountService accountService = container.getBean(AccountService.class);
-        TransactionService transactionService = container.getBean(TransactionService.class);
-
-        //create 2 account sender and receiver.
-        Account sender = accountService.createNewAccount(BigDecimal.valueOf(70),new Date(),
-                AccountType.CHECKING,1L);
-
-        Account receiver = accountService.createNewAccount(BigDecimal.valueOf(50),new Date(),
-                AccountType.SAVING,1L);
-
-        accountService.listAllAccount().forEach(System.out::println);
-
-        transactionService.makeTransfer(sender,receiver,new BigDecimal(40),new Date(),"transaction between the same user");
-        System.out.println(transactionService.findAllTransactions().get(0));
-        accountService.listAllAccount().forEach(System.out::println);
+//        //get account and transaction service beans
+//        AccountService accountService = container.getBean(AccountService.class);
+//        TransactionService transactionService = container.getBean(TransactionService.class);
+//
+//        //create 2 account sender and receiver.
+//        Account sender = accountService.createNewAccount(BigDecimal.valueOf(70),new Date(),
+//                AccountType.CHECKING,1L);
+//
+//        Account receiver = accountService.createNewAccount(BigDecimal.valueOf(50),new Date(),
+//                AccountType.SAVING,1L);
+//
+//        accountService.listAllAccount().forEach(System.out::println);
+//
+//        transactionService.makeTransfer(sender,receiver,new BigDecimal(40),new Date(),"transaction between the same user");
+//        System.out.println(transactionService.findAllTransactions().get(0));
+//        accountService.listAllAccount().forEach(System.out::println);
 
 
     }

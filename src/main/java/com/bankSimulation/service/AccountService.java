@@ -15,4 +15,6 @@ public interface AccountService {
     List<Account> listAllAccount();
 
     void deleteAccount(UUID id);
+
+    Account findByID(UUID id);
 }

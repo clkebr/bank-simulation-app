@@ -2,6 +2,7 @@ package com.bankSimulation.controller;
 
 import com.bankSimulation.enums.AccountType;
 import com.bankSimulation.model.Account;
+import com.bankSimulation.model.Transaction;
 import com.bankSimulation.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,5 +52,7 @@ public class AccountController {
 
         return "redirect:/index";
     }
+
+
 
 }

@@ -7,10 +7,12 @@ import com.bankSimulation.service.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +39,13 @@ public class TransactionController {
     }
 
     @PostMapping("/transfer")
-    public String transfer(Transaction transaction, Model model){
+    public String transfer(@Valid Transaction transaction, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+
+            model.addAttribute("accounts", accountService.listAllAccount());
+            return "transaction/make-transfer";
+        }
+
         Account sender = accountService.findByID(transaction.getSender());
         Account receiver = accountService.findByID(transaction.getReceiver());
         transactionService.makeTransfer(sender,receiver,transaction.getAmount(),new Date(),transaction.getMessage());

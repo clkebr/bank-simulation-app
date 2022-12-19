@@ -1,7 +1,7 @@
 package com.bankSimulation.service;
 
-import com.bankSimulation.model.Account;
-import com.bankSimulation.model.Transaction;
+import com.bankSimulation.dto.AccountDTO;
+import com.bankSimulation.dto.TransactionDTO;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,13 +10,13 @@ import java.util.UUID;
 
 public interface TransactionService {
 
-    Transaction makeTransfer(Account sender, Account receiver, BigDecimal amount, Date creationDate, String message);
+    TransactionDTO makeTransfer(AccountDTO sender, AccountDTO receiver, BigDecimal amount, Date creationDate, String message);
     
-    List<Transaction> findAllTransactions();
+    List<TransactionDTO> findAllTransactions();
 
 
-    List<Transaction> lastTransactionsList();
+    List<TransactionDTO> lastTransactionsList();
 
-    List<Transaction> retrieveAllTransactionByID(UUID id);
+    List<TransactionDTO> retrieveAllTransactionByID(UUID id);
 
 }

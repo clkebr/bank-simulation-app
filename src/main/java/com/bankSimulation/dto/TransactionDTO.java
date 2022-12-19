@@ -1,7 +1,6 @@
-package com.bankSimulation.model;
+package com.bankSimulation.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -9,14 +8,14 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.UUID;
 
-@Data @Builder
-public class Transaction {
-    @NotNull
-    public UUID sender;
-    @NotNull
-    private UUID receiver;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class TransactionDTO {
+    public AccountDTO sender;
+    private AccountDTO receiver;
     @NotNull
     @Positive
     private BigDecimal amount;

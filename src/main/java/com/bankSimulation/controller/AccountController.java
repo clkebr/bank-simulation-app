@@ -1,8 +1,7 @@
 package com.bankSimulation.controller;
 
+import com.bankSimulation.dto.AccountDTO;
 import com.bankSimulation.enums.AccountType;
-import com.bankSimulation.model.Account;
-import com.bankSimulation.model.Transaction;
 import com.bankSimulation.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,18 +32,18 @@ public class AccountController {
 
     @GetMapping("/create-form")
     public String getForm(Model model){
-        model.addAttribute("account", Account.builder().build());
+        model.addAttribute("account", AccountDTO.builder().build());
         model.addAttribute("accountTypes", AccountType.values());
         return "/account/create-account";
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute("account") Account account,BindingResult bindingResult,Model model){
+    public String create(@Valid @ModelAttribute("account") AccountDTO accountDTO, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("accountTypes", AccountType.values());
             return "account/create-account";
         }
-        accountService.createNewAccount(account.getBalance(),new Date(),account.getAccountType(),account.getUserId());
+        accountService.createNewAccount(accountDTO.getBalance(),new Date(), accountDTO.getAccountType(), accountDTO.getUserId());
         return "redirect:/index";
     }
 

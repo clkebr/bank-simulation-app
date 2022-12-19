@@ -6,7 +6,6 @@ import com.bankSimulation.dto.TransactionDTO;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public interface TransactionService {
 
@@ -17,6 +16,6 @@ public interface TransactionService {
 
     List<TransactionDTO> lastTransactionsList();
 
-    List<TransactionDTO> retrieveAllTransactionByID(UUID id);
+    List<TransactionDTO> retrieveAllTransactionByID(Long id);
 
 }

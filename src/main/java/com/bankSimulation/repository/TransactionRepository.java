@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -29,7 +28,7 @@ public class TransactionRepository {
 
     }
 
-    public List<TransactionDTO> findTransactionsByID(UUID id) {
+    public List<TransactionDTO> findTransactionsByID(Long id) {
         return transactionDTOList.stream()
                 .filter(transactionDTO -> transactionDTO.getSender().equals(id) || transactionDTO.getReceiver().equals(id) )
                 .collect(Collectors.toList());

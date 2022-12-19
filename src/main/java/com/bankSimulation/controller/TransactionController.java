@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Controller
@@ -30,7 +29,7 @@ public class TransactionController {
         //we need all accounts to provide them as sender, receiver
         model.addAttribute("accounts",accountService.listAllAccount());
         //we need empty transaction object to get info from UI
-        model.addAttribute("transaction", TransactionDTO.builder().build());
+        model.addAttribute("transaction", new TransactionDTO());
         //we need list of last 10 transactions
         model.addAttribute("lastTransactions",transactionService.lastTransactionsList());
 
@@ -45,14 +44,14 @@ public class TransactionController {
             return "transaction/make-transfer";
         }
 
-        AccountDTO sender = accountService.findByID(transactionDTO.getSender());
-        AccountDTO receiver = accountService.findByID(transactionDTO.getReceiver());
+        AccountDTO sender = accountService.findByID(transactionDTO.getSender().getId());
+        AccountDTO receiver = accountService.findByID(transactionDTO.getReceiver().getId());
         transactionService.makeTransfer(sender,receiver, transactionDTO.getAmount(),new Date(), transactionDTO.getMessage());
         return "redirect:/make-transfer";
     }
 
     @GetMapping("/transaction/{id}")
-    public String userTransactions(@PathVariable("id") UUID id, Model model){
+    public String userTransactions(@PathVariable("id") Long id, Model model){
         List<TransactionDTO> transactionDTOS = transactionService.retrieveAllTransactionByID(id);
         model.addAttribute("transactions", transactionDTOS);
 

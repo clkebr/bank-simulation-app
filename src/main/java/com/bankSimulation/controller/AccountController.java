@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.Date;
-import java.util.UUID;
 
 @Controller
 public class AccountController {
@@ -32,7 +31,7 @@ public class AccountController {
 
     @GetMapping("/create-form")
     public String getForm(Model model){
-        model.addAttribute("account", AccountDTO.builder().build());
+        model.addAttribute("account",new AccountDTO());
         model.addAttribute("accountTypes", AccountType.values());
         return "/account/create-account";
     }
@@ -48,7 +47,7 @@ public class AccountController {
     }
 
     @GetMapping("/delete/{id}")
-    public String getDeleteAccount(@PathVariable("id") UUID id){
+    public String getDeleteAccount(@PathVariable("id") Long id){
 
         //find the account and change status to DELETED
         accountService.deleteAccount(id);

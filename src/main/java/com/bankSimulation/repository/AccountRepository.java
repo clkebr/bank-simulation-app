@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class AccountRepository {
@@ -23,7 +22,7 @@ public class AccountRepository {
 
     //find the account inside the list, if not throws RecordNotFoundException
 
-    public AccountDTO findById(UUID id) {
+    public AccountDTO findById(Long id) {
        return accountDTOList.stream().filter(account -> account.getId().equals(id))
                .findAny().orElseThrow(()-> new RecordNotFoundException( id + " this account does not exist in DB"));
 

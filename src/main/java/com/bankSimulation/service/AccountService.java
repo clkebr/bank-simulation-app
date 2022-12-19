@@ -6,7 +6,6 @@ import com.bankSimulation.dto.AccountDTO;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public interface AccountService {
 
@@ -14,7 +13,7 @@ public interface AccountService {
 
     List<AccountDTO> listAllAccount();
 
-    void deleteAccount(UUID id);
+    void deleteAccount(Long id);
 
-    AccountDTO findByID(UUID id);
+    AccountDTO findByID(Long id);
 }

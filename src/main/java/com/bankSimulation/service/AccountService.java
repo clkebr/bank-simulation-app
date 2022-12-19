@@ -18,4 +18,6 @@ public interface AccountService {
     AccountDTO findByID(Long id);
 
     List<AccountDTO> findAllActive();
+
+    void updateAccount(AccountDTO accountDTO);
 }

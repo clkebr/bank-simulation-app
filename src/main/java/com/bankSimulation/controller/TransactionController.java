@@ -27,9 +27,9 @@ public class TransactionController {
     public String makeTransfer(Model model){
 
         //we need all accounts to provide them as sender, receiver
-        model.addAttribute("accounts",accountService.listAllAccount());
+        model.addAttribute("accounts",accountService.findAllActive());
         //we need empty transaction object to get info from UI
-        model.addAttribute("transaction", new TransactionDTO());
+        model.addAttribute("transactionDTO", new TransactionDTO());
         //we need list of last 10 transactions
         model.addAttribute("lastTransactions",transactionService.lastTransactionsList());
 
@@ -40,7 +40,7 @@ public class TransactionController {
     public String transfer(@Valid TransactionDTO transactionDTO, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
 
-            model.addAttribute("accounts", accountService.listAllAccount());
+            model.addAttribute("accounts", accountService.findAllActive());
             return "transaction/make-transfer";
         }
 

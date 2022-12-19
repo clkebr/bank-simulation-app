@@ -31,13 +31,13 @@ public class AccountController {
 
     @GetMapping("/create-form")
     public String getForm(Model model){
-        model.addAttribute("account",new AccountDTO());
+        model.addAttribute("accountDTO",new AccountDTO());
         model.addAttribute("accountTypes", AccountType.values());
         return "/account/create-account";
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute("account") AccountDTO accountDTO, BindingResult bindingResult, Model model){
+    public String create(@Valid @ModelAttribute("accountDTO") AccountDTO accountDTO, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("accountTypes", AccountType.values());
             return "account/create-account";

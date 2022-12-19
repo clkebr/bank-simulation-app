@@ -1,8 +1,10 @@
 package com.bankSimulation.service.impl;
 
+import com.bankSimulation.entity.Account;
 import com.bankSimulation.enums.AccountStatus;
 import com.bankSimulation.enums.AccountType;
 import com.bankSimulation.dto.AccountDTO;
+import com.bankSimulation.mapper.AccountMapper;
 import com.bankSimulation.repository.AccountRepository;
 import com.bankSimulation.service.AccountService;
 import org.springframework.stereotype.Component;
@@ -10,40 +12,45 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Component
 public class AccountServiceImpl implements AccountService {
     AccountRepository accountRepository;
+    AccountMapper accountMapper;
 
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
+        this.accountMapper = accountMapper;
     }
 
     @Override
-    public AccountDTO createNewAccount(BigDecimal balance, Date creationDate, AccountType accountType, Long userId) {
-        AccountDTO accountDTO = new AccountDTO();
+    public void createNewAccount(AccountDTO accountDTO) {
 
-
-//                AccountDTO.builder().id(UUID.randomUUID())
-//                .userId(userId).accountType(accountType).balance(balance)
-//                .creationDate(creationDate).accountStatus(AccountStatus.ACTIVE).build();
-       return accountRepository.save(accountDTO);
+        Account account = accountMapper.convertEntity(accountDTO);
+        account.setAccountStatus(AccountStatus.ACTIVE);
+        account.setCreationDate(new Date());
+        accountRepository.save(account);
     }
 
     @Override
     public List<AccountDTO> listAllAccount() {
-        return accountRepository.findAll();
+        return accountRepository.findAll().stream().map(accountMapper::convertDTO).collect(Collectors.toList());
     }
 
     @Override
     public void deleteAccount(Long id) {
-        accountRepository.findById(id).setAccountStatus(AccountStatus.DELETED);
+
+        Account account = accountRepository.findById(id).get();
+        account.setAccountStatus(AccountStatus.DELETED);
+        accountRepository.save(account);
     }
 
     @Override
     public AccountDTO findByID(Long id) {
-        return accountRepository.findById(id);
+        return accountMapper.convertDTO(accountRepository.findById(id).get());
     }
 }

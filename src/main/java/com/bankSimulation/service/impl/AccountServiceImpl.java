@@ -53,4 +53,10 @@ public class AccountServiceImpl implements AccountService {
     public AccountDTO findByID(Long id) {
         return accountMapper.convertDTO(accountRepository.findById(id).get());
     }
+
+    @Override
+    public List<AccountDTO> findAllActive() {
+        return accountRepository.findAllByAccountStatus(AccountStatus.ACTIVE).stream()
+                .map(accountMapper::convertDTO).collect(Collectors.toList());
+    }
 }

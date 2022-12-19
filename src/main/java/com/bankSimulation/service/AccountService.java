@@ -16,4 +16,6 @@ public interface AccountService {
     void deleteAccount(Long id);
 
     AccountDTO findByID(Long id);
+
+    List<AccountDTO> findAllActive();
 }
